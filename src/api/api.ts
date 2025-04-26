@@ -1,6 +1,6 @@
 import { Task } from "../stores/TaskStore";
 
-const API_URL = "http://localhost:3000/api/tasks";
+const API_URL = "https://back-todo-study.onrender.com/api/tasks";
 
 /**
  * Получает список невыполненных задач с сервера.
