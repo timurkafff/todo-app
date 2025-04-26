@@ -37,7 +37,6 @@ export const AllTasksPage = observer(() => {
 
     return (
         <div className="min-h-screen bg-[#FFDDD2] flex flex-col items-center p-4">
-            <h1 className="text-3xl font-bold text-[#006D77] mb-6">All Tasks</h1>
             <div className="w-full max-w-3xl">
                 <TaskList
                     id="all"
