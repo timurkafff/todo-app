@@ -8,6 +8,14 @@ export const TaskCreation = () => {
   const [priority, setPriority] = useState("Low");
   const [notes, setNotes] = useState("");
 
+  /**
+   * Обрабатывает добавление новой задачи.
+   * Проверяет наличие заголовка задачи, отправляет данные в хранилище и сбрасывает форму после успешного добавления.
+   * В случае ошибки выводит сообщение в консоль.
+   * 
+   * @async
+   * @returns {Promise<void>} Промис, который разрешается после завершения операции.
+  */
   const handleAddTask = async () => {
     if (!title.trim()) {
       alert("Task title is required!");

@@ -18,6 +18,13 @@ export const TaskEditModal = ({ task, onClose }: TaskEditModalProps) => {
     const [priority, setPriority] = useState(task.priority || "Low");
     const [description, setDescription] = useState(task.description || "");
 
+
+    /**
+     * Редактирует задачу, обновляя её данные в хранилище.
+     * Выполняет валидацию перед отправкой данных.
+     * @async
+     * @returns {Promise<void>} Промис, который разрешается после успешного обновления задачи.
+    */
     const handleEditTask = async () => {
         if (!title.trim()) {
             alert("Task title is required!");

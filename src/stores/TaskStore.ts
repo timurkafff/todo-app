@@ -30,7 +30,13 @@ class TaskStore {
             searchTasks: action.bound,
         });
     }
-
+    /**
+     * Загружает задачи из API и обновляет состояние хранилища.
+     * Выполняет параллельные запросы для получения невыполненных и завершенных задач.
+     * В случае ошибки очищает списки задач и сбрасывает состояние загрузки.
+     * @async
+     * @returns {Promise<void>} Промис, который разрешается после завершения загрузки.
+    */
     async loadTasks() {
         this.isLoading = true;
         try {
@@ -52,6 +58,16 @@ class TaskStore {
         }
     }
 
+
+    /**
+     * Добавляет новую задачу в хранилище.
+     * Выполняет запрос к API для создания задачи, а затем обновляет локальное состояние.
+     * Если задача завершена, она добавляется в список завершенных задач, иначе — в список активных задач.
+     * 
+     * @async
+     * @param {Omit<Task, "id" | "completed" | "createdAt" | "deleted" | "order">} task - Данные новой задачи без автоматически генерируемых полей.
+     * @returns {Promise<Task>} Промис, который разрешается с созданной задачей.
+    */
     async addTask(task: Omit<Task, "id" | "completed" | "createdAt" | "deleted" | "order">) {
         const newTask = await addTask(task);
         runInAction(() => {
@@ -69,6 +85,16 @@ class TaskStore {
         });
     }
 
+    /**
+     * Обновляет статус задачи (выполнена/невыполнена) и перемещает её между списками.
+     * Если задача становится завершенной, добавляет дату завершения.
+     * @async
+     * @param {string} id - Идентификатор задачи.
+     * @param {Object} updates - Обновления статуса задачи.
+     * @param {boolean} updates.completed - Новый статус задачи.
+     * @param {string} [updates.endDate] - Дата завершения задачи (если применимо).
+     * @returns {Promise<Task>} Обновленная задача.
+    */
     async updateTask(id: string, updates: Partial<Task>) {
         const updatedTask = await updateTask(id, updates);
         runInAction(() => {
@@ -80,6 +106,16 @@ class TaskStore {
         return updatedTask;
     }
 
+    /**
+     * Обновляет статус задачи (выполнена/невыполнена) и перемещает её между списками.
+     * Если задача становится завершенной, добавляет дату завершения.
+     * @async
+     * @param {string} id - Идентификатор задачи.
+     * @param {Object} updates - Обновления статуса задачи.
+     * @param {boolean} updates.completed - Новый статус задачи.
+     * @param {string} [updates.endDate] - Дата завершения задачи (если применимо).
+     * @returns {Promise<Task>} Обновленная задача.
+    */
     async updateTaskStatus(id: string, updates: { completed: boolean; endDate?: string }) {
         const updatedTask = await updateTaskStatus(id, updates);
         runInAction(() => {
